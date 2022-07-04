@@ -124,12 +124,9 @@ export default class Home extends Component {
                 <div className="col-sm-6">
                   <div className="forcenter">
                     <div className="textwrap">
-                      <h2 className="section-titles ">Neo Dumber</h2>
+                      <h2 className="section-titles ">Roadrunner</h2>
                       <p className="text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Eu in cursus tortor id id non.Nam consectetur purus urna
-                        diam, commodo donec volutpat. Eros non sollicitudin nisl
-                        velit fermentum dui eget. Etiam erat faucibus.
+                        Fully Automated Compact EV
                       </p>
                     </div>
                   </div>
