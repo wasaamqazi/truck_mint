@@ -30,27 +30,25 @@ ul.navigation li {
     position: relative;
     z-index: 1;
     padding-top: 20px;
+    width: 100%;
 }
 
 li.nav-links {
     color: white;
-    padding: 8px 32px;
+   
     margin: 0px 5px;
     font-size: 15px;
 }
 
-li.nav-links:first-child {
+
+li.nav-links:first-child a {
     background: #30B0C1;
     border-radius: 41px;
     box-shadow: 0px 0px 15px #0ae1ef;
 
 }
 
-li.nav-links:hover {
-    background: #30B0C1;
-    border-radius: 41px;
-    box-shadow: 0px 0px 15px #0ae1ef;
-}
+
 
 li.nav-links:focus {
     background: #30B0C1;
@@ -59,9 +57,6 @@ li.nav-links:focus {
 }
 
 
-li.nav-links:first-child:hover {
-    box-shadow: 0px 0px 15px #0ae1ef;
-}
 
 li.nav-links.mint-btn {
     background: #B4B9D3;
@@ -70,8 +65,10 @@ li.nav-links.mint-btn {
     border-radius: 3px;
     color: black;
     text-transform: uppercase;
+    padding: 8px 32px;
+    margin-top: -10px;
+    margin-left: 25px;
 }
-
 h2.first-tit {
 
     color: white;
@@ -288,7 +285,7 @@ p.text {
 }
 
 h3.card-tit {
-    color: #0AE1EF;
+    color: #ffffff;
     font-family: 'Agressive';
     font-size: 24px;
 }
@@ -420,6 +417,7 @@ span.numberstroke {
     -webkit-text-stroke: 4px #ebebeb00;
     color: #091016;
     text-align: center;
+    transition: 1s ease-in-out;
 }
 
 
@@ -438,6 +436,16 @@ img.icon3 {
 
 .team {
     border: 1px solid #fff;
+    transition: 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.team h3 {
+    transition: 0.5s ease-in-out;
+}
+
+.team p {
+    transition: 0.5s ease-in-out;
 }
 
 .team-text-wrap {
@@ -446,8 +454,8 @@ img.icon3 {
 
 img.team-img {
     max-width: 100%;
+    transition: 0.5s ease-in-out;
 }
-
 .team.main .team-text-wrap h3.team-name {
     font-size: 16px;
     font-family: 'Agressive';
@@ -487,10 +495,11 @@ section.team-main {
     padding: 0 !important;
 }
 
-.nav-items {
+.nav-items  {
     text-decoration: none;
     color: white;
     text-transform: capitalize;
+    padding: 8px 32px;
 }
 
 .nav-items:hover {
@@ -552,19 +561,30 @@ img.social-icons {
 
 .timer {
     padding-top: 50px;
-    padding-bottom: 150px;
+    padding-bottom: 18px;
     margin-bottom: 20px;
 }
-
+.timer span {
+    background: #303030;
+    border: 1.16px solid #757575;
+    /* display: inline; */
+    /* float: left; */
+    font-family: Agressive;
+    font-size: 30px;
+    margin: 5px;
+    padding: 27px 16px;
+    /* width: 71px; */
+    letter-spacing: 3px;
+}
 h3.day-tit {
     font-family: 'Agressive';
     font-size: 22px;
-    padding: 5px 11px;
+    padding: 5px 0px;
 }
-
 .titles-wrapper {
-    float: left;
+  
     display: flex;
+    padding-top: 50px;
 }
 
 h3.day-tit {
@@ -574,11 +594,10 @@ h3.day-tit {
 }
 
 .time-tits {
-    width: 71px;
-    margin: 5px;
+    width: 72px;
+    margin: 0px;
     text-align: center;
 }
-
 @media(max-width:1500px) AND (min-width:1024px) {
     section#artwork h2.art {
         font-size: 270px;
@@ -608,7 +627,115 @@ a.footer-links:hover {
 }
 
 a.apply-btn:hover {
-    color: #d73ec8;
+    background-color: #d73ec8;
+    color: white;
 }
 
 /* testing git */
+
+.slider-desk {
+    width: 100%
+}
+
+.slider-desk {
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.team:hover h3 {
+    color: black;
+}
+
+.team:hover p {
+    color: black;
+}
+
+.team:hover {
+    background: purple;
+}
+
+.team:hover {
+    background: #f647e5;
+}
+
+.fadeInBottom { animation: fadeInBottom }
+@keyframes fadeInBottom {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to { opacity: 1 }
+}
+/* .foranimation{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+} */
+.cards.firstcard:hover h3.card-tit {
+    color: #c63dbb 
+!important;
+}
+.cards.firstcard:hover {
+border-color: #c63dbb ;
+}
+
+.cards:hover h3.card-tit {
+    color: rgb(10, 225, 239) 
+!important;
+}
+.cards:hover {
+border-color: rgb(10, 225, 239) ;
+}
+
+.mint-btn:hover {
+    box-shadow: 0px 0px 26px 1px #bf3cb7;
+}
+
+.icon1{
+    margin-bottom: 10px;
+    transition: 1s ease-in-out;
+}
+
+.iconbox:hover .second-g path{
+    fill: #bf3cb7;
+}
+
+.iconbox:hover svg.icons {
+    transform: rotate(45deg);
+}
+
+.icon2{
+    margin-bottom: 10px;
+    transition: 1s ease-in-out;
+}
+
+.icon3{
+    margin-bottom: 10px;
+    transition: 1s ease-in-out;
+}
+
+section#roadmap .col-sm-3:hover span.numberstroke {
+    background: #f647e5;
+    color: black;
+    -webkit-background-clip: text;
+    -webkit-text-stroke: 4px #00000000;
+    transform: rotate(10deg);
+}
+
+p.tap-on-truck {
+    text-align: center;
+    margin-top: -25px;
+}
+
+.road-runn {
+    padding-bottom: 80px;
+}
+.active-scroll-spy {
+    color: #fff;
+    border-radius: 41px;
+    box-shadow: 0px 0px 15px #0ae1ef;
+   background-color: #30B0C1;
+  }
