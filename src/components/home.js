@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "../assets/imgs/logo.png";
+import logo from "../assets/imgs/logo.webp";
 import mainbg from "../assets/imgs/main-bg.jpg";
 import pattern from "../assets/imgs/pattern.png";
 import team1 from "../assets/imgs/team/team1.png";
@@ -69,6 +69,7 @@ const Home = (props) => {
   return (
     <>
       <img className="main-image" src={mainbg} alt="" />
+      <Header />
       <video
         className="slider-desk"
         id="slider-desk"
@@ -79,7 +80,7 @@ const Home = (props) => {
       >
         <source src={video1} type="video/mp4"></source>
       </video>
-      <Header />
+
       <ScrollSpy>
         <section id="#" className="main-section">
           <div className="container ">
@@ -89,15 +90,16 @@ const Home = (props) => {
                   <h2 className="first-tit">
                     Welcome To
                     <br />
-                    Fmc Truck
+                    FMC Digital
                   </h2>
                   <h3 className="second-tit">
                     Ride Along With Future Smart and Minimal
                   </h3>
-                  <p className="text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nec, dolor aliquam at proin. Arcu sed interdum pellentesque
-                    urna purus duis neque. Id erat ut
+                  <p className="text hideonmob">
+                    Lorem ipsum dolor sit amet, consectetur <br />
+                    adipiscing elit. Nec, dolor aliquam at proin.
+                    <br /> Arcu sed interdum pellentesque urna purus
+                    <br /> duis neque. Id erat ut
                   </p>
                 </div>
               </div>
@@ -112,7 +114,7 @@ const Home = (props) => {
             data-aos-delay="100"
           >
             <div className="row">
-              <div className="col-sm-7">
+              <div className="col-lg-7">
                 <Carousel
                   fade={true}
                   interval={1000}
@@ -136,7 +138,7 @@ const Home = (props) => {
                   </Carousel.Item>
                 </Carousel>
               </div>
-              <div className="col-sm-5">
+              <div className="col-lg-5">
                 <div className="collection-tit">
                   <div className="collection-text-wrapper">
                     <div className="collection-tit-wrapper">
@@ -175,7 +177,7 @@ const Home = (props) => {
 
             <div className="container">
               <div className="row">
-                <div className="col-sm-6">
+                <div className="col-lg-6">
                   <img
                     className="artwork-left artwork-controls"
                     src="../../assets/images/artworkleft0.png"
@@ -184,7 +186,7 @@ const Home = (props) => {
                   />
                   <p className="tap-on-truck">Tap On Truck</p>
                 </div>
-                <div className="col-sm-6">
+                <div className="col-lg-6">
                   <div className="forcenter">
                     <div className="textwrap">
                       <h2 className="section-titles">Cyber tooth</h2>
@@ -205,7 +207,7 @@ const Home = (props) => {
             <div className="road-runn">
               <div className="container">
                 <div className="row">
-                  <div className="col-sm-6">
+                  <div id="first" className="col-lg-6">
                     <div className="forcenter">
                       <div className="textwrap">
                         <h2 className="section-titles ">Roadrunner</h2>
@@ -213,7 +215,7 @@ const Home = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-sm-6">
+                  <div id="second" className="col-lg-6">
                     <img
                       className="artwork-left artwork-controls"
                       src="../../assets/images/right/artworkright0.png"
@@ -229,12 +231,10 @@ const Home = (props) => {
           </div>
         </section>
 
-        <section id="minting" style={{ paddingBottom: "100px" }}>
+        <section id="minting">
           <div className="artwork-wrapper"></div>
           <div className="container">
-            <h2 style={{ margin: "0" }} className="artwork-title ">
-              Minting
-            </h2>
+            <h2 className="artwork-title ">Minting</h2>
           </div>
           <div className="forbackgroundok">
             <h2
@@ -376,7 +376,7 @@ const Home = (props) => {
           </h2>
           <div className="container">
             <div className="row">
-              <div className="col-sm-4 iconbox">
+              <div className="col-sm-4 col-lg-4  iconbox">
                 <div className="img-wrapper">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -484,7 +484,7 @@ const Home = (props) => {
                   </p>
                 </div>
               </div>
-              <div className="col-sm-4 iconbox">
+              <div className="col-sm-4 col-lg-4 iconbox">
                 <div className="img-wrapper">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -592,7 +592,7 @@ const Home = (props) => {
                   </p>
                 </div>
               </div>
-              <div className="col-sm-4 iconbox">
+              <div className="col-sm-4 col-lg-4  iconbox">
                 <div className="img-wrapper">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -724,7 +724,14 @@ const Home = (props) => {
                     <h2 className="joinnewsletter">join newsletter</h2>
                     <p className="text">
                       Join the
-                      <span style={{ color: "#0AE1EF", fontWeight: "bold" }}>
+                      <span
+                        style={{
+                          color: "#0AE1EF",
+                          fontWeight: "bold",
+                          paddingLeft: "5px",
+                          paddingRight: "5px",
+                        }}
+                      >
                         FMC TRUCK
                       </span>
                       newsletter and be the first to know the latest news!
@@ -757,7 +764,7 @@ const Home = (props) => {
           </h2>
           <div className="container">
             <div className="row">
-              <div className="col-sm-3">
+              <div className="col-sm-6 col-lg-3">
                 <h3 className="phase">
                   Phase<span className="numberstroke">1</span>
                 </h3>
@@ -771,7 +778,7 @@ const Home = (props) => {
                   orci morbi. Eu ullamcorper nibh leo volutpat.
                 </p>
               </div>
-              <div className="col-sm-3">
+              <div className="col-sm-6 col-lg-3">
                 <h3 className="phase">
                   Phase<span className="numberstroke">2</span>
                 </h3>
@@ -785,7 +792,7 @@ const Home = (props) => {
                   orci morbi. Eu ullamcorper nibh leo volutpat.
                 </p>
               </div>
-              <div className="col-sm-3">
+              <div className="col-sm-6 col-lg-3">
                 <h3 className="phase">
                   Phase<span className="numberstroke">3</span>
                 </h3>
@@ -799,7 +806,7 @@ const Home = (props) => {
                   orci morbi. Eu ullamcorper nibh leo volutpat.
                 </p>
               </div>
-              <div className="col-sm-3">
+              <div className="col-sm-6 col-lg-3">
                 <h3 className="phase">
                   Phase<span className="numberstroke">4</span>
                 </h3>
@@ -836,10 +843,10 @@ const Home = (props) => {
           <div className="container">
             <div className="custom-container">
               <div className="row">
-                <div className="col-sm-5">
+                <div className="col-lg-5">
                   <div className="team main">
                     <div className="team-img-wrap">
-                      <img className="team-img" src={team1} alt="" />
+                      <img className="team-img first-img" src={team1} alt="" />
                     </div>
                     <div className="team-text-wrap">
                       <h3 className="team-name">Truck Artist</h3>
@@ -850,9 +857,9 @@ const Home = (props) => {
                   </div>
                 </div>
 
-                <div className="col-sm-7">
+                <div className="col-lg-7">
                   <div className="row">
-                    <div className="col-sm-4">
+                    <div className="col-sm-4 col-md-4">
                       <div className="team">
                         <div className="team-img-wrap">
                           <img className="team-img" src={team2} alt="" />
@@ -865,7 +872,7 @@ const Home = (props) => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-sm-4">
+                    <div className="col-sm-4 col-md-4">
                       <div className="team">
                         <div className="team-img-wrap">
                           <img className="team-img" src={team3} alt="" />
@@ -878,7 +885,7 @@ const Home = (props) => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-sm-4">
+                    <div className="col-sm-4 col-md-4">
                       <div className="team">
                         <div className="team-img-wrap">
                           <img className="team-img" src={team4} alt="" />
@@ -891,9 +898,8 @@ const Home = (props) => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div style={{ paddingTop: "20px" }} className="row">
-                    <div className="col-sm-4">
+
+                    <div className="col-sm-4 col-md-4 second-row-team">
                       <div className="team">
                         <div className="team-img-wrap">
                           <img className="team-img" src={team5} alt="" />
@@ -906,7 +912,7 @@ const Home = (props) => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-sm-4">
+                    <div className="col-sm-4 col-md-4 second-row-team">
                       <div className="team">
                         <div className="team-img-wrap">
                           <img className="team-img" src={team6} alt="" />
@@ -919,7 +925,7 @@ const Home = (props) => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-sm-4">
+                    <div className="col-sm-4 col-md-4 second-row-team">
                       <div className="team">
                         <div className="team-img-wrap">
                           <img className="team-img" src={team7} alt="" />
@@ -960,7 +966,9 @@ const Home = (props) => {
             <div className="container">
               <div className="row">
                 <div className="col-sm-2">
-                  <img className="footer-img" src={openseaicon} alt="" />
+                  <div className="footer-img-wrap">
+                    <img className="footer-img" src={openseaicon} alt="" />
+                  </div>
                 </div>
                 <div className="col-sm-6">
                   <ul className="footer-ul">
@@ -974,7 +982,12 @@ const Home = (props) => {
                       <a className="footer-links">Help/Faq</a>
                     </li>
                     <li>
-                      <a className="footer-links">Info@Supervet.io</a>
+                      <a
+                        href="mailto:info@fmcdigital.io"
+                        className="footer-links"
+                      >
+                        info@fmcdigital.io
+                      </a>
                     </li>
                   </ul>
                 </div>
