@@ -279,9 +279,11 @@ const Home = (props) => {
                       </div>
                     </div>
                   </div>
-                  <a className="mint-btn" href="#">
-                    Mint
-                  </a>
+                  <div className="mint-btn-wrap">
+                    <button className="mint-btn" href="#">
+                      Mint
+                    </button>
+                  </div>
                 </div>
               </div>
 
