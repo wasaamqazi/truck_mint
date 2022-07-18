@@ -7,7 +7,10 @@
     font-family: Formula1;
     src: url(../public//assets/fonts/Formula1-Bold_web_0.ttf);
 }
-
+.react-audio-player {
+	visibility: hidden;
+    position: absolute;
+}
 ul.navigation {
     padding: 0px;
     display: flex;

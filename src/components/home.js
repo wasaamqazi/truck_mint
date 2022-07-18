@@ -24,7 +24,8 @@ import Carousel from "react-bootstrap/Carousel";
 import { useState } from "react";
 import Countdown from "react-countdown";
 import ScrollSpy from "react-ui-scrollspy";
-
+import ReactAudioPlayer from "react-audio-player";
+import sound from "../assets/audio/sound.mp3";
 const Home = (props) => {
   const [value, setValue] = useState(1);
   const ChangingImages1 = () => {
@@ -44,6 +45,7 @@ const Home = (props) => {
     }
   };
   const [value2, setValue2] = useState(1);
+
   const ChangingImages2 = () => {
     var first = document.getElementsByClassName("artwork-controls");
     setValue2(value2 + 1);
@@ -68,6 +70,12 @@ const Home = (props) => {
 
   return (
     <>
+      {/* <iframe src={sound} allow="autoplay" id="iframeAudio"></iframe>
+
+      <audio autoplay loop id="playAudio">
+        <source src={sound} />
+      </audio> */}
+      <ReactAudioPlayer src={sound} autoPlay loop controls />
       <img className="main-image" src={mainbg} alt="" />
       <Header />
       <video
@@ -80,7 +88,6 @@ const Home = (props) => {
       >
         <source src={video1} type="video/mp4"></source>
       </video>
-
       <ScrollSpy>
         <section id="#" className="main-section">
           <div className="container ">
