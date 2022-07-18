@@ -70,11 +70,6 @@ const Home = (props) => {
 
   return (
     <>
-      {/* <iframe src={sound} allow="autoplay" id="iframeAudio"></iframe>
-
-      <audio autoplay loop id="playAudio">
-        <source src={sound} />
-      </audio> */}
       <ReactAudioPlayer src={sound} autoPlay loop controls />
       <img className="main-image" src={mainbg} alt="" />
       <Header />
