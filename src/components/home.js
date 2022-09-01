@@ -90,18 +90,19 @@ const Home = (props) => {
               <div className="col-sm-6 col-6">
                 <div className="text-wrapper">
                   <h2 className="first-tit">
-                    Welcome To
+                    Going Digital
                     <br />
-                    FMC Digital
+                    Introducing the Future of Trucking Via Web3
                   </h2>
                   <h3 className="second-tit">
-                    Ride Along With Future Smart and Minimal
+                    Introducing Web3 Trucking
                   </h3>
-                  <p className="text hideonmob">
-                    Lorem ipsum dolor sit amet, consectetur <br />
-                    adipiscing elit. Nec, dolor aliquam at proin.
-                    <br /> Arcu sed interdum pellentesque urna purus
-                    <br /> duis neque. Id erat ut
+                  <p className="text hideonmob" style={{fontWeight:'bold'}}>
+                    <br />
+                    Introducing Blockchain Trucking
+                    <br /> Atomic Digital LLC is the company that can take traditional trucking companies to web3.
+                    <br /> FMC Elite Trucking Services Company LLC is the first Trucking company to have this done.
+                    <br /> Commute Bridge is a web3 TMS, SaaS
                   </p>
                 </div>
               </div>
