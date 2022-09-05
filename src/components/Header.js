@@ -14,7 +14,12 @@ const Header = () => {
         <div className="container">
           <div className="row">
             <div className="col-sm-2 col-5">
-              <img className="img-fluid logo" src={logo} alt="" />
+              <img
+                style={{ cursor: "pointer" }}
+                className="img-fluid logo"
+                src="..\assets\images\Truck Mint Logo@4x.png"
+                alt=""
+              />
             </div>
             <div className="col-sm-10 col-7">
               <ul id="nav-ctrl" className="navigation">
@@ -66,7 +71,7 @@ const Header = () => {
                 </li>
                 <li className="nav-links scrollto mint-btn">
                   <a className="nav-items" href="#">
-                    Mint
+                    Connect Wallet
                   </a>
                 </li>
               </ul>

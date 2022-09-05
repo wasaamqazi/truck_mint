@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import logo from "../assets/imgs/logo.webp";
 import mainbg from "../assets/imgs/main-bg.jpg";
 import pattern from "../assets/imgs/pattern.png";
@@ -68,6 +68,33 @@ const Home = (props) => {
     }
   };
 
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  function calculateTimeLeft() {
+    const difference = +new Date("2022-11-05T11:13:04+00:00") - +new Date();
+
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (24 * 60 * 60 * 1000)),
+        hours: Math.floor((difference / 1000 / 60 / 60) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    // (total / 1000 / 60 / 60) % 24;
+
+    return timeLeft;
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+  });
+
   return (
     <>
       <ReactAudioPlayer src={sound} autoPlay loop controls />
@@ -94,14 +121,14 @@ const Home = (props) => {
                     <br />
                     Introducing the Future of Trucking Via Web3
                   </h2>
-                  <h3 className="second-tit">
-                    Introducing Web3 Trucking
-                  </h3>
-                  <p className="text hideonmob" style={{fontWeight:'bold'}}>
+                  <h3 className="second-tit">Introducing Web3 Trucking</h3>
+                  <p className="text hideonmob" style={{ fontWeight: "bold" }}>
                     <br />
                     Introducing Blockchain Trucking
-                    <br /> Atomic Digital LLC is the company that can take traditional trucking companies to web3.
-                    <br /> FMC Elite Trucking Services Company LLC is the first Trucking company to have this done.
+                    <br /> Atomic Digital LLC is the company that can take
+                    traditional trucking companies to web3.
+                    <br /> FMC Elite Trucking Services Company LLC is the first
+                    Trucking company to have this done.
                     <br /> Commute Bridge is a web3 TMS, SaaS
                   </p>
                 </div>
@@ -254,13 +281,17 @@ const Home = (props) => {
                   <div className="cards firstcard">
                     <div className="card-inner">
                       <h3 style={{ color: "#0AE1EF" }} className="card-tit">
-                        Private
+                        1st Sale
                       </h3>
                       <div className="timer">
-                        <Countdown
+                        {/* <Countdown
                           onComplete={() => window.location.reload(false)}
                           date={new Date(parseInt(1659999380) * 1000)}
-                        />
+                        /> */}
+                        <span>
+                          {timeLeft.days}:{timeLeft.hours}:{timeLeft.minutes}:
+                          {timeLeft.seconds}
+                        </span>
                         <div className="titles-wrapper">
                           <div className="time-tits">
                             <h3 className="day-tit">Day</h3>
@@ -280,6 +311,9 @@ const Home = (props) => {
                       <div className="currentdate">
                         Date: {new Date().toLocaleString() + ""}
                       </div>
+                      <div className="textbox-email">
+                        <input type="email" placeholder="Email:" />
+                      </div>
                     </div>
                   </div>
                   <div className="mint-btn-wrap">
@@ -293,7 +327,7 @@ const Home = (props) => {
               <div className="col-xl-4">
                 <div className="cards">
                   <div className="card-inner">
-                    <h3 className="card-tit">Private</h3>
+                    <h3 className="card-tit">2nd Sale</h3>
                     <div className="timer">
                       <Countdown
                         onComplete={() => window.location.reload(false)}
@@ -318,13 +352,19 @@ const Home = (props) => {
                     <div className="currentdate">
                       Date: {new Date().toLocaleString() + ""}
                     </div>
+                    <div
+                      style={{ visibility: "hidden" }}
+                      className="textbox-email"
+                    >
+                      <input type="email" placeholder="Email:" />
+                    </div>
                   </div>
                 </div>
               </div>
               <div className="col-xl-4">
                 <div className="cards">
                   <div className="card-inner">
-                    <h3 className="card-tit">Private</h3>
+                    <h3 className="card-tit">3rd Sale</h3>
                     <div className="timer">
                       <Countdown
                         onComplete={() => window.location.reload(false)}
@@ -348,6 +388,12 @@ const Home = (props) => {
                     <div className="price-wrap">price: 0.20</div>
                     <div className="currentdate">
                       Date: {new Date().toLocaleString() + ""}
+                    </div>
+                    <div
+                      style={{ visibility: "hidden" }}
+                      className="textbox-email"
+                    >
+                      <input type="email" placeholder="Email:" />
                     </div>
                   </div>
                 </div>
@@ -737,7 +783,7 @@ const Home = (props) => {
                           paddingRight: "5px",
                         }}
                       >
-                        FMC TRUCK
+                        TRUCK MINT
                       </span>
                       newsletter and be the first to know the latest news!
                     </p>
@@ -963,7 +1009,11 @@ const Home = (props) => {
           <div className="container-fluid  nopadding  ">
             <div className="artwork-wrapper"></div>
             <h2 className="artwork-title">
-              <img className="img-fluid footlogo" src={logo} alt="" />
+              <img
+                className="img-fluid footlogo"
+                src="..\assets\images\Truck Mint Logo@4x.png"
+                alt=""
+              />
             </h2>
           </div>
 
@@ -978,7 +1028,7 @@ const Home = (props) => {
                 <div className="col-sm-6">
                   <ul className="footer-ul">
                     <li>
-                      <a className="footer-links">About FMC Truck</a>
+                      <a className="footer-links">About Truck Mint</a>
                     </li>
                     <li>
                       <a className="footer-links">ADVERTISING</a>
@@ -1003,31 +1053,31 @@ const Home = (props) => {
                     src={socialicon1}
                     alt="social icons"
                   />
-                  <img
+                  {/* <img
                     className="social-icons"
                     src={socialicon2}
                     alt="social icons"
-                  />
+                  /> */}
                   <img
                     className="social-icons"
                     src={socialicon3}
                     alt="social icons"
                   />
-                  <img
+                  {/* <img
                     className="social-icons"
                     src={socialicon4}
                     alt="social icons"
-                  />
+                  /> */}
                   <img
                     className="social-icons"
                     src={socialicon5}
                     alt="social icons"
                   />
-                  <img
+                  {/* <img
                     className="social-icons"
                     src={socialicon6}
                     alt="social icons"
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
