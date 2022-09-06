@@ -96,6 +96,7 @@ ul {
 p,
 li {
   font-family: "Montserrat", sans-serif;
+  line-height: 2 rem;
 }
 
 h3.second-tit {
@@ -404,7 +405,7 @@ p.text {
 span.numberstroke {
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
-  font-size: 84px;
+  font-size: 60px;
   font-family: "Agressive";
   font-weight: 800;
   text-transform: uppercase;
@@ -978,7 +979,7 @@ section#minting {
 
 @media (max-width: 992px) {
   p.text {
-    text-align: center;
+    /* text-align: center; */
   }
 
   #first {
@@ -1097,3 +1098,11 @@ img.artwork-left.artwork-controls {
   color: white;
   font-weight: bold;
 }
+
+/* <br />
+                    Introducing Blockchain Trucking
+                    <br /> Atomic Digital LLC is the company that can take
+                    traditional trucking companies to web3.
+                    <br /> FMC Elite Trucking Services Company LLC is the first
+                    Trucking company to have this done.
+                    <br /> Commute Bridge is a web3 TMS, SaaS */
