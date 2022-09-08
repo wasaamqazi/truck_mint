@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo from "../assets/imgs/logo.webp";
+import "../App.css";
 import ScrollSpy from "react-ui-scrollspy";
 import hamburger from "../assets/imgs/icons/hamburger.png";
 const Header = () => {
@@ -14,12 +15,14 @@ const Header = () => {
         <div className="container">
           <div className="row">
             <div className="col-sm-2 col-5">
-              <img
-                style={{ cursor: "pointer" }}
-                className="img-fluid logo"
-                src="..\assets\images\Truck Mint Logo@4x.png"
-                alt=""
-              />
+              <a href="#">
+                <img
+                  style={{ cursor: "pointer" }}
+                  className="img-fluid logo"
+                  src="..\assets\images\Truck Mint Logo@4x.png"
+                  alt=""
+                />
+              </a>
             </div>
             <div className="col-sm-10 col-7">
               <ul id="nav-ctrl" className="navigation">
@@ -69,8 +72,8 @@ const Header = () => {
                     Contact
                   </a>
                 </li>
-                <li className="nav-links scrollto mint-btn">
-                  <a className="nav-items" href="#">
+                <li className="nav-links scrollto connectwalletmobile">
+                  <a className="nav-items mint-btn " href="#">
                     Connect Wallet
                   </a>
                 </li>
