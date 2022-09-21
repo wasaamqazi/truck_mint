@@ -303,14 +303,14 @@ const Home = (props) => {
                         1st Sale
                       </h3>
                       <div className="timer">
-                        {/* <Countdown
+                        <Countdown
                           onComplete={() => window.location.reload(false)}
-                          date={new Date(parseInt(1659999380) * 1000)}
-                        /> */}
-                        <span>
+                          date={new Date(parseInt(1665316799) * 1000)}
+                        />
+                        {/* <span style={{ width: "250px" }}>
                           {timeLeft.days}:{timeLeft.hours}:{timeLeft.minutes}:
                           {timeLeft.seconds}
-                        </span>
+                        </span> */}
                         <div className="titles-wrapper">
                           <div className="time-tits">
                             <h3 className="day-tit">Day</h3>
