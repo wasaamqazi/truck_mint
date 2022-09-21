@@ -72,7 +72,7 @@ const Home = (props) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   function calculateTimeLeft() {
-    const difference = +new Date("2022-11-05T11:13:04+00:00") - +new Date();
+    const difference = +new Date("2022-10-09T12:00:04+00:00") - +new Date();
 
     let timeLeft = {};
 
