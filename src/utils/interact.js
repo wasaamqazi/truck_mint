@@ -50,7 +50,7 @@ export const getConnectedAddress = async () => {
           "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb",
       },
     });
-console.log(provider)
+    console.log(provider);
     //  Enable session (triggers QR Code modal)
     await provider.enable();
 
@@ -293,7 +293,7 @@ export const checkAllowance = async () => {
     });
 
     try {
-      window.truckTokenContract = await new web3.eth.truckTokenContract(
+      window.truckTokenContract = await new web3.eth.Contract(
         truckTokenABI,
         truckTokenAddress
       );
@@ -351,7 +351,7 @@ export const approveMinter = async () => {
     });
 
     //  Enable session (triggers QR Code modal)
-    provider.enable();
+    await provider.enable();
 
     const web3 = new Web3(provider);
 
@@ -363,7 +363,7 @@ export const approveMinter = async () => {
     });
 
     try {
-      window.truckTokenContract = await new web3.eth.truckTokenContract(
+      window.truckTokenContract = await new web3.eth.Contract(
         truckTokenABI,
         truckTokenAddress
       );
