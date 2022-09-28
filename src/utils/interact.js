@@ -49,8 +49,7 @@ export const getConnectedAddress = async () => {
         80001:
           "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb",
       },
-    });
-    console.log(provider);
+    }); 
     //  Enable session (triggers QR Code modal)
     await provider.enable();
 
@@ -71,59 +70,7 @@ export const getConnectedAddress = async () => {
     }
   }
 };
-export const getOwner = async () => {
-  if (window.ethereum) {
-    var address_connected = "";
-
-    try {
-      window.truckMintcontract = await new web3.eth.Contract(
-        truckMintABI,
-        truckMintAddress
-      );
-
-      const owner = await window.truckMintcontract.methods.owner().call();
-      console.log(owner);
-      return owner;
-    } catch (err) {
-      console.log(err);
-      return "";
-    }
-  } else {
-    //  Create WalletConnect Provider
-    const provider = new WalletConnectProvider({
-      rpc: {
-        80001:
-          "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb",
-      },
-    });
-
-    //  Enable session (triggers QR Code modal)
-    provider.enable();
-
-    const web3 = new Web3(provider);
-
-    var address_connected = "";
-
-    await web3.eth.getAccounts().then((res) => {
-      address_connected = res[0];
-    });
-
-    try {
-      window.truckMintcontract = await new web3.eth.Contract(
-        truckMintABI,
-        truckMintAddress
-      );
-
-      const owner = await window.truckMintcontract.methods.owner().call();
-      console.log(owner);
-      return owner;
-      //sign the transaction via Metamask
-    } catch (err) {
-      console.log(err);
-      return "";
-    }
-  }
-};
+ 
 export const getTotalSupply = async () => {
   try {
     window.truckMintcontract = await new web3.eth.Contract(
@@ -133,8 +80,7 @@ export const getTotalSupply = async () => {
 
     const totalSupply = await window.truckMintcontract.methods
       .totalSupply()
-      .call();
-    console.log(totalSupply);
+      .call(); 
     return totalSupply;
   } catch (err) {
     console.log(err);
@@ -159,8 +105,7 @@ export const mintNFT = async (minterEmail) => {
 
       //set up your Ethereum transaction
 
-      //sign the transaction via Metamask
-      console.log(minterEmail);
+      //sign the transaction via Metamask 
       const txHash = await web3.eth.sendTransaction({
         to: truckMintAddress, // Required except during contract publications.
         from: address_connected, // must match user's active address.
@@ -170,8 +115,7 @@ export const mintNFT = async (minterEmail) => {
         minterEmail: minterEmail,
       })
         .then(async (docRef) => {
-          console.log("Document has been added successfully");
-          console.log(docRef);
+       
           window.location.reload();
         })
         .catch((error) => {
@@ -212,7 +156,7 @@ export const mintNFT = async (minterEmail) => {
         truckMintAddress
       );
 
-      // console.log(window.contract.methods);
+   
 
       //sign the transaction via Metamask
       const txHash = await web3.eth.sendTransaction({
@@ -225,8 +169,7 @@ export const mintNFT = async (minterEmail) => {
         minterEmail: minterEmail,
       })
         .then(async (docRef) => {
-          console.log("Document has been added successfully");
-          console.log(docRef);
+       
           window.location.reload();
         })
         .catch((error) => {
@@ -244,8 +187,7 @@ export const mintNFT = async (minterEmail) => {
   }
 };
 
-export const checkAllowance = async () => {
-  console.log("Check Allowance");
+export const checkAllowance = async () => { 
   if (window.ethereum) {
     var address_connected = "";
 
@@ -265,8 +207,7 @@ export const checkAllowance = async () => {
 
       const totalAllowance = await window.truckTokenContract.methods
         .allowance(address_connected, truckMintAddress)
-        .call();
-      console.log(totalAllowance);
+        .call(); 
       return totalAllowance;
     } catch (err) {
       console.log(err);
@@ -300,8 +241,7 @@ export const checkAllowance = async () => {
 
       const totalAllowance = await window.truckTokenContract.methods
         .allowance(address_connected, truckMintAddress)
-        .call();
-      console.log(totalAllowance);
+        .call(); 
       return totalAllowance;
 
       //sign the transaction via Metamask

@@ -42,7 +42,6 @@ const Home = (props) => {
   const [address_connected, setAddressConnected] = useState("");
   const getCurrrentConnectAddress = async () => {
     const currentConnectedAddress = await getConnectedAddress();
-    console.log(currentConnectedAddress);
     setAddressConnected(currentConnectedAddress);
   };
   useEffect(() => {
@@ -72,7 +71,6 @@ const Home = (props) => {
     // setisLoading(true);
     const totalMintedSupplyTemp = await getTotalSupply();
     setTotalMintedSupply(totalMintedSupplyTemp);
-    console.log(totalMintedSupplyTemp);
     setisLoading(false);
   };
 
@@ -119,7 +117,6 @@ const Home = (props) => {
     } else {
       // setisLoading(true);
       const approvedResult = await approveMinter();
-      console.log(approvedResult);
       checkAllowanceofUser();
     }
   };
@@ -131,13 +128,11 @@ const Home = (props) => {
       // setisLoading(true);
       if (checkValidation()) {
         //show error
-        console.log("Error!");
         setisLoading(false);
         toast.error("Please enter valid email", { toastId: "emailError" });
       } else {
         //Mint here
         await mintNFT(minterEmail);
-        console.log("Minted");
         setisLoading(false);
       }
     }
@@ -456,17 +451,17 @@ const Home = (props) => {
                           </div>
                         </div>
                       </div>
-                      <div className="time-tits mint-counter">
+                      {/* <div className="time-tits mint-counter">
                         <h3 className="day-tit">
                           {padLeadingZeros(totalMintedSupply, 4)}/1000
                         </h3>
-                      </div>
+                      </div> */}
                       <div className="price-wrap">price: 0.33</div>
                       <div className="currentdate">
                         Date: 10/9/2022, 11:59:00 PM
                         {/* Date: {new Date().toLocaleString() + ""} */}
                       </div>
-                      {showMint && !showApprove ? (
+                      {/* {showMint && !showApprove ? (
                         <div className="textbox-email">
                           <input
                             type="email"
@@ -479,10 +474,10 @@ const Home = (props) => {
                         </div>
                       ) : (
                         <></>
-                      )}
+                      )} */}
                     </div>
                   </div>
-                  {showMint && !showApprove ? (
+                  {/* {showMint && !showApprove ? (
                     <div className="mint-btn-wrap">
                       <button
                         className="mint-btn"
@@ -494,8 +489,8 @@ const Home = (props) => {
                     </div>
                   ) : (
                     <></>
-                  )}
-                  {showApprove && !showMint ? (
+                  )} */}
+                  {/* {showApprove && !showMint ? (
                     <div className="mint-btn-wrap">
                       <button
                         className="mint-btn"
@@ -507,92 +502,96 @@ const Home = (props) => {
                     </div>
                   ) : (
                     <></>
-                  )}
+                  )} */}
                 </div>
               </div>
 
               <div className="col-xl-4">
-                <div className="cards">
-                  <div className="card-inner">
-                    <h3 className="card-tit">2nd Sale</h3>
-                    <div className="timer first-timer">
-                      {/* <Countdown
+                <div className="card-wrapping">
+                  <div className="cards firstcard">
+                    <div className="card-inner">
+                      <h3 className="card-tit">2nd Sale</h3>
+                      <div className="timer first-timer">
+                        {/* <Countdown
                         onComplete={() => window.location.reload(false)}
                         date={new Date(parseInt(1659749980) * 1000)}
                       /> */}
-                      <span className="comingSoonCustom">Coming Soon</span>
+                        <span className="comingSoonCustom">Coming Soon</span>
 
-                      <div className="titles-wrapper">
-                        <div className="time-tits">
-                          <h3 className="day-tit">Day</h3>
-                        </div>
-                        <div className="time-tits">
-                          <h3 className="day-tit">Hrs</h3>
-                        </div>
-                        <div className="time-tits">
-                          <h3 className="day-tit">Mins</h3>
-                        </div>
-                        <div className="time-tits">
-                          <h3 className="day-tit">Sec</h3>
+                        <div className="titles-wrapper">
+                          <div className="time-tits">
+                            <h3 className="day-tit">Day</h3>
+                          </div>
+                          <div className="time-tits">
+                            <h3 className="day-tit">Hrs</h3>
+                          </div>
+                          <div className="time-tits">
+                            <h3 className="day-tit">Mins</h3>
+                          </div>
+                          <div className="time-tits">
+                            <h3 className="day-tit">Sec</h3>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="time-tits mint-counter">
+                      {/* <div className="time-tits mint-counter">
                       <h3 className="day-tit">NA/NA</h3>
-                    </div>
-                    <div className="price-wrap">price: N/A</div>
-                    <div className="currentdate">
-                      Date: N/A
-                      {/* Date: {new Date().toLocaleString() + ""} */}
-                    </div>
-                    <div
-                      style={{ visibility: "hidden" }}
-                      className="textbox-email"
-                    >
-                      <input type="email" placeholder="Email:" />
+                    </div> */}
+                      <div className="price-wrap">price: N/A</div>
+                      <div className="currentdate">
+                        Date: N/A
+                        {/* Date: {new Date().toLocaleString() + ""} */}
+                      </div>
+                      {/* <div
+                        style={{ visibility: "hidden" }}
+                        className="textbox-email"
+                      >
+                        <input type="email" placeholder="Email:" />
+                      </div> */}
                     </div>
                   </div>
                 </div>
               </div>
               <div className="col-xl-4">
-                <div className="cards">
-                  <div className="card-inner">
-                    <h3 className="card-tit">3rd Sale</h3>
-                    <div className="timer first-timer">
-                      {/* <Countdown
+                <div className="card-wrapping">
+                  <div className="cards firstcard">
+                    <div className="card-inner">
+                      <h3 className="card-tit">3rd Sale</h3>
+                      <div className="timer first-timer">
+                        {/* <Countdown
                         onComplete={() => window.location.reload(false)}
                         date={new Date(parseInt(1659749380) * 1000)}
                       /> */}
-                      <span className="comingSoonCustom">Coming Soon</span>
+                        <span className="comingSoonCustom">Coming Soon</span>
 
-                      <div className="titles-wrapper">
-                        <div className="time-tits">
-                          <h3 className="day-tit">Day</h3>
-                        </div>
-                        <div className="time-tits">
-                          <h3 className="day-tit">Hrs</h3>
-                        </div>
-                        <div className="time-tits">
-                          <h3 className="day-tit">Mins</h3>
-                        </div>
-                        <div className="time-tits">
-                          <h3 className="day-tit">Sec</h3>
+                        <div className="titles-wrapper">
+                          <div className="time-tits">
+                            <h3 className="day-tit">Day</h3>
+                          </div>
+                          <div className="time-tits">
+                            <h3 className="day-tit">Hrs</h3>
+                          </div>
+                          <div className="time-tits">
+                            <h3 className="day-tit">Mins</h3>
+                          </div>
+                          <div className="time-tits">
+                            <h3 className="day-tit">Sec</h3>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="time-tits mint-counter">
+                      {/* <div className="time-tits mint-counter">
                       <h3 className="day-tit">NA/NA</h3>
-                    </div>
-                    <div className="price-wrap">price: N/A</div>
-                    <div className="currentdate">
-                      Date: N/A
-                      {/* Date: {new Date().toLocaleString() + ""} */}
-                    </div>
-                    <div
-                      style={{ visibility: "hidden" }}
-                      className="textbox-email"
-                    >
-                      <input type="email" placeholder="Email:" />
+                    </div> */}
+                      <div className="price-wrap">price: N/A</div>
+                      <div className="currentdate">
+                        Date: N/A
+                        {/* Date: {new Date().toLocaleString() + ""} */}
+                      </div>
+                      {/* <div
+                        style={{ visibility: "hidden" }}
+                        className="textbox-email"
+                      >
+                        <input type="email" placeholder="Email:" />
+                      </div> */}
                     </div>
                   </div>
                 </div>
