@@ -3,6 +3,9 @@ import logo from "../assets/imgs/logo.webp";
 import "../App.css";
 import ScrollSpy from "react-ui-scrollspy";
 import hamburger from "../assets/imgs/icons/hamburger.png";
+
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+
 const Header = () => {
   const hamCtrl = () => {
     console.log("Clicked");
@@ -73,9 +76,72 @@ const Header = () => {
                   </a>
                 </li>
                 <li className="nav-links scrollto connectwalletmobile">
-                  <a className="nav-items mint-btn " href="#">
+                  {/* <a className="nav-items mint-btn " href="#">
                     Connect Wallet
-                  </a>
+                  </a> */}
+                  <ConnectButton.Custom>
+                    {({
+                      account,
+                      chain,
+                      openAccountModal,
+                      openChainModal,
+                      openConnectModal,
+                      authenticationStatus,
+                      mounted,
+                    }) => {
+                      // Note: If your app doesn't use authentication, you
+                      // can remove all 'authenticationStatus' checks
+                      const ready =
+                        mounted && authenticationStatus !== "loading";
+                      const connected =
+                        ready &&
+                        account &&
+                        chain &&
+                        (!authenticationStatus ||
+                          authenticationStatus === "authenticated");
+
+                      return (
+                        <div
+                          {...(!ready && {
+                            "aria-hidden": true,
+                            style: {
+                              opacity: 0,
+                              pointerEvents: "none",
+                              userSelect: "none",
+                            },
+                          })}
+                        >
+                          {(() => {
+                            if (!connected) {
+                              return (
+                                <button
+                                  className="nav-items mint-btn "
+                                  onClick={openConnectModal}
+                                  type="button"
+                                >
+                                  Connect Wallet
+                                </button>
+                              );
+                            }
+
+                            return (
+                              <div style={{ display: "flex", gap: 12 }}>
+                                <button className="nav-items mint-btn "
+                                   
+                                  type="button"
+                                >
+                                  {account.displayName}
+                                  {account.displayBalance
+                                    ? ` (${account.displayBalance})`
+                                    : ""}
+                                </button>
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      );
+                    }}
+                  </ConnectButton.Custom>
                 </li>
               </ul>
 

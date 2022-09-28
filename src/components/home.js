@@ -27,8 +27,121 @@ import Countdown from "react-countdown";
 import ScrollSpy from "react-ui-scrollspy";
 import ReactAudioPlayer from "react-audio-player";
 import sound from "../assets/audio/sound.mp3";
+import {
+  approveMinter,
+  checkAllowance,
+  getConnectedAddress,
+  getTotalSupply,
+  mintNFT,
+} from "../utils/interact";
+import { toast } from "react-toastify";
+import validator from "validator";
+import Spinner from "react-bootstrap/Spinner";
+
 const Home = (props) => {
+  const [address_connected, setAddressConnected] = useState("");
+  const getCurrrentConnectAddress = async () => {
+    const currentConnectedAddress = await getConnectedAddress();
+    console.log(currentConnectedAddress);
+    setAddressConnected(currentConnectedAddress);
+  };
+  useEffect(() => {
+    getCurrrentConnectAddress();
+  }, []);
+
+  const [isLoading, setisLoading] = useState(false);
+
   const [value, setValue] = useState(1);
+  const [minterEmail, setMinterEmail] = useState("");
+
+  const [totalAllowance, setTotalAllowance] = useState(null);
+  const [totalMintedSupply, setTotalMintedSupply] = useState(0);
+  const [showApprove, setShowApprove] = useState(false);
+  const [showMint, setShowMint] = useState(false);
+
+  //check user's allowance
+  const checkAllowanceofUser = async () => {
+    setisLoading(true);
+    const totalAllowanceTemp = await checkAllowance();
+    setTotalAllowance(totalAllowanceTemp);
+    setisLoading(false);
+  };
+
+  //get total minted supply
+  const getTotalMintedSupply = async () => {
+    setisLoading(true);
+    const totalMintedSupplyTemp = await getTotalSupply();
+    setTotalMintedSupply(totalMintedSupplyTemp);
+    console.log(totalMintedSupplyTemp);
+    setisLoading(false);
+  };
+
+  useEffect(() => {
+    checkAllowanceofUser();
+  }, [address_connected]);
+
+  useEffect(() => {
+    getTotalMintedSupply();
+  }, []);
+  useEffect(() => {
+    if (totalAllowance != null) {
+      if (totalAllowance == 3400000000000000000) {
+        setShowApprove(false);
+        setShowMint(true);
+      } else {
+        setShowApprove(true);
+        setShowMint(false);
+      }
+    }
+  }, [totalAllowance]);
+  //Invalid Classes
+  function addInvalidClass(elementId) {
+    var element = document.getElementById(elementId);
+    element.classList.add("is-invalid");
+  }
+  function removeInvalidClass(elementId) {
+    var element = document.getElementById(elementId);
+    element.classList.remove("is-invalid");
+  }
+  function checkValidation() {
+    var errorOccurs = false;
+
+    if (!minterEmail || minterEmail == "" || !validator.isEmail(minterEmail)) {
+      errorOccurs = true;
+    } else {
+      errorOccurs = false;
+    }
+    return errorOccurs;
+  }
+  const onApprovePressed = async () => {
+    if (isLoading) {
+      toast.warning("Please wait!", { toastId: "pleaseWaitWarning" });
+    } else {
+      setisLoading(true);
+      const approvedResult = await approveMinter();
+      console.log(approvedResult);
+      checkAllowanceofUser();
+    }
+  };
+
+  const onMintPressed = async () => {
+    if (isLoading) {
+      toast.warning("Please wait!", { toastId: "pleaseWaitWarning" });
+    } else {
+      setisLoading(true);
+      if (checkValidation()) {
+        //show error
+        console.log("Error!");
+        setisLoading(false);
+        toast.error("Please enter valid email", { toastId: "emailError" });
+      } else {
+        //Mint here
+        await mintNFT(minterEmail);
+        console.log("Minted");
+        setisLoading(false);
+      }
+    }
+  };
   const ChangingImages1 = () => {
     var first = document.getElementsByClassName("artwork-controls");
     setValue(value + 1);
@@ -88,6 +201,11 @@ const Home = (props) => {
     // (total / 1000 / 60 / 60) % 24;
 
     return timeLeft;
+  }
+  function padLeadingZeros(num, size) {
+    var s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
   }
 
   useEffect(() => {
@@ -293,6 +411,18 @@ const Home = (props) => {
               mi
             </h2>
           </div>
+          {isLoading && (
+            <>
+              <div className="loader">
+                <Spinner
+                  animation="border"
+                  style={{ width: "50px", height: "50px" }}
+                  isGrow
+                />
+                <span style={{ fontSize: "30px" }}>Loading...</span>
+              </div>
+            </>
+          )}
           <div className="container">
             <div className="row">
               <div className="col-xl-4">
@@ -302,7 +432,7 @@ const Home = (props) => {
                       <h3 style={{ color: "#0AE1EF" }} className="card-tit">
                         1st Sale
                       </h3>
-                      <div className="timer">
+                      <div className="timer first-timer">
                         <Countdown
                           onComplete={() => window.location.reload(false)}
                           date={new Date(parseInt(1665316799) * 1000)}
@@ -326,20 +456,58 @@ const Home = (props) => {
                           </div>
                         </div>
                       </div>
-                      <div className="price-wrap">price: 0.20</div>
+                      <div className="time-tits mint-counter">
+                        <h3 className="day-tit">
+                          {padLeadingZeros(totalMintedSupply, 4)}/1000
+                        </h3>
+                      </div>
+                      <div className="price-wrap">price: 0.33</div>
                       <div className="currentdate">
-                        Date: {new Date().toLocaleString() + ""}
+                        Date: 10/9/2022, 11:59:00 PM
+                        {/* Date: {new Date().toLocaleString() + ""} */}
                       </div>
-                      <div className="textbox-email">
-                        <input type="email" placeholder="Email:" />
-                      </div>
+                      {showMint && !showApprove ? (
+                        <div className="textbox-email">
+                          <input
+                            type="email"
+                            placeholder="Email:"
+                            onChange={(e) => {
+                              setMinterEmail(e.target.value);
+                            }}
+                            value={minterEmail}
+                          />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </div>
-                  <div className="mint-btn-wrap">
-                    <button className="mint-btn" href="#">
-                      Mint
-                    </button>
-                  </div>
+                  {showMint && !showApprove ? (
+                    <div className="mint-btn-wrap">
+                      <button
+                        className="mint-btn"
+                        href="#"
+                        onClick={onMintPressed}
+                      >
+                        Mint
+                      </button>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  {showApprove && !showMint ? (
+                    <div className="mint-btn-wrap">
+                      <button
+                        className="mint-btn"
+                        href="#"
+                        onClick={onApprovePressed}
+                      >
+                        Approve
+                      </button>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
 
@@ -347,11 +515,13 @@ const Home = (props) => {
                 <div className="cards">
                   <div className="card-inner">
                     <h3 className="card-tit">2nd Sale</h3>
-                    <div className="timer">
-                      <Countdown
+                    <div className="timer first-timer">
+                      {/* <Countdown
                         onComplete={() => window.location.reload(false)}
                         date={new Date(parseInt(1659749980) * 1000)}
-                      />
+                      /> */}
+                      <span className="comingSoonCustom">Coming Soon</span>
+
                       <div className="titles-wrapper">
                         <div className="time-tits">
                           <h3 className="day-tit">Day</h3>
@@ -367,9 +537,13 @@ const Home = (props) => {
                         </div>
                       </div>
                     </div>
-                    <div className="price-wrap">price: 0.20</div>
+                    <div className="time-tits mint-counter">
+                      <h3 className="day-tit">NA/NA</h3>
+                    </div>
+                    <div className="price-wrap">price: N/A</div>
                     <div className="currentdate">
-                      Date: {new Date().toLocaleString() + ""}
+                      Date: N/A
+                      {/* Date: {new Date().toLocaleString() + ""} */}
                     </div>
                     <div
                       style={{ visibility: "hidden" }}
@@ -384,11 +558,13 @@ const Home = (props) => {
                 <div className="cards">
                   <div className="card-inner">
                     <h3 className="card-tit">3rd Sale</h3>
-                    <div className="timer">
-                      <Countdown
+                    <div className="timer first-timer">
+                      {/* <Countdown
                         onComplete={() => window.location.reload(false)}
                         date={new Date(parseInt(1659749380) * 1000)}
-                      />
+                      /> */}
+                      <span className="comingSoonCustom">Coming Soon</span>
+
                       <div className="titles-wrapper">
                         <div className="time-tits">
                           <h3 className="day-tit">Day</h3>
@@ -404,9 +580,13 @@ const Home = (props) => {
                         </div>
                       </div>
                     </div>
-                    <div className="price-wrap">price: 0.20</div>
+                    <div className="time-tits mint-counter">
+                      <h3 className="day-tit">NA/NA</h3>
+                    </div>
+                    <div className="price-wrap">price: N/A</div>
                     <div className="currentdate">
-                      Date: {new Date().toLocaleString() + ""}
+                      Date: N/A
+                      {/* Date: {new Date().toLocaleString() + ""} */}
                     </div>
                     <div
                       style={{ visibility: "hidden" }}

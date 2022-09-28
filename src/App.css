@@ -284,6 +284,7 @@ h3.card-tit {
 }
 
 .mint-btn {
+  margin-top: 7px;
   background: #b4b9d3;
   border: 1px solid #ffffff;
   box-shadow: inset 0px 0px 12px -1px #032d33;
@@ -1130,3 +1131,38 @@ svg.icons.icon3.iconify.iconify--bxl > :nth-child(1) {
                     <br /> FMC Elite Trucking Services Company LLC is the first
                     Trucking company to have this done.
                     <br /> Commute Bridge is a web3 TMS, SaaS */
+.comingSoonCustom {
+  background: #303030;
+  border: 1.16px solid #757575;
+  /* display: inline; */
+  /* float: left; */
+  font-family: Agressive;
+  font-size: 30px;
+  margin: 5px;
+  padding: 27px 16px;
+  /* width: 71px; */
+  letter-spacing: 3px;
+}
+.mint-counter .day-tit {
+  text-align: center;
+}
+
+.time-tits.mint-counter {
+  width: 100%;
+  padding-bottom: 30px;
+}
+.timer.first-timer {
+  margin-bottom: 0px;
+}
+.loader {
+  bottom: 50%;
+  position: fixed;
+  right: 47%;
+  /* left: 50%; */
+  color: #ffffff;
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+
+  z-index: 999;
+}
