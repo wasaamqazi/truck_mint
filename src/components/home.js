@@ -61,7 +61,7 @@ const Home = (props) => {
 
   //check user's allowance
   const checkAllowanceofUser = async () => {
-    setisLoading(true);
+    // setisLoading(true);
     const totalAllowanceTemp = await checkAllowance();
     setTotalAllowance(totalAllowanceTemp);
     setisLoading(false);
@@ -69,7 +69,7 @@ const Home = (props) => {
 
   //get total minted supply
   const getTotalMintedSupply = async () => {
-    setisLoading(true);
+    // setisLoading(true);
     const totalMintedSupplyTemp = await getTotalSupply();
     setTotalMintedSupply(totalMintedSupplyTemp);
     console.log(totalMintedSupplyTemp);
@@ -117,7 +117,7 @@ const Home = (props) => {
     if (isLoading) {
       toast.warning("Please wait!", { toastId: "pleaseWaitWarning" });
     } else {
-      setisLoading(true);
+      // setisLoading(true);
       const approvedResult = await approveMinter();
       console.log(approvedResult);
       checkAllowanceofUser();
@@ -128,7 +128,7 @@ const Home = (props) => {
     if (isLoading) {
       toast.warning("Please wait!", { toastId: "pleaseWaitWarning" });
     } else {
-      setisLoading(true);
+      // setisLoading(true);
       if (checkValidation()) {
         //show error
         console.log("Error!");
