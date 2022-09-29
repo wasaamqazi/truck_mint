@@ -37,7 +37,7 @@ const wagmiClient = createClient({
 function App() {
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains} initialChain={chain.polygonMumbai}>
+      <RainbowKitProvider chains={chains} initialChain={chain.polygon}>
         <Home />
         <ToastContainer
           position="top-right"
