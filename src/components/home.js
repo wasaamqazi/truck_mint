@@ -126,6 +126,8 @@ const Home = (props) => {
     return errorOccurs;
   }
   const onApprovePressed = async () => {
+    console.log(chain)
+
     if (chain) {
       if (chain.id == current_chainId) {
         if (isLoading) {
