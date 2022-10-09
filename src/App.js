@@ -9,14 +9,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { ToastContainer } from "react-toastify";
 
 const { chains, provider } = configureChains(
-  [
-    chain.goerli,
-    chain.mainnet,
-    chain.polygon,
-    chain.optimism,
-    chain.arbitrum,
-    chain.polygonMumbai,
-  ],
+  [chain.polygon],
   [
     alchemyProvider({ apiKey: "4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb" }),
     publicProvider(),

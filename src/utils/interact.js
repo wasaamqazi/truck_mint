@@ -17,7 +17,10 @@ import { firestoredb } from "../firebase/firebase";
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 
 const RPC_URL =
-  "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb";
+  "https://polygon-mainnet.g.alchemy.com/v2/VogGgwpNhdrqobnh5kxDBGeRkzCqWqxB";
+// const RPC_URL =
+//   "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb";
+const current_chainId = 80001;
 const web3 = createAlchemyWeb3(RPC_URL);
 
 // const web3 = new Web3(provider);
@@ -46,10 +49,10 @@ export const getConnectedAddress = async () => {
     //  Create WalletConnect Provider
     const provider = new WalletConnectProvider({
       rpc: {
-        80001:
-          "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb",
+        137: RPC_URL,
       },
-    }); 
+      qrcode: false,
+    });
     //  Enable session (triggers QR Code modal)
     await provider.enable();
 
@@ -70,7 +73,49 @@ export const getConnectedAddress = async () => {
     }
   }
 };
- 
+// export const getConnectedChainId = async () => {
+//   if (window.ethereum) {
+//     var chainId_connected = "";
+   
+//     try {
+//       await web3.eth.getChainId().then((res) => {
+//         chainId_connected = res;
+        
+//       });
+//       return chainId_connected;
+//     } catch (err) {
+//       console.log(err);
+//       return 0;
+//     }
+//   } else {
+//     //  Create WalletConnect Provider
+//     const provider = new WalletConnectProvider({
+//       rpc: {
+//         137: RPC_URL,
+//       },
+//       qrcode: false,
+//     });
+//     //  Enable session (triggers QR Code modal)
+//     await provider.enable();
+
+//     const web3 = new Web3(provider);
+
+//     var chainId_connected = "";
+
+//     await web3.eth.getChainId().then((res) => {
+//       chainId_connected = res;
+//     });
+
+//     try {
+//       return chainId_connected;
+//       //sign the transaction via Metamask
+//     } catch (err) {
+//       console.log(err);
+//       return 0;
+//     }
+//   }
+// };
+
 export const getTotalSupply = async () => {
   try {
     window.truckMintcontract = await new web3.eth.Contract(
@@ -80,7 +125,7 @@ export const getTotalSupply = async () => {
 
     const totalSupply = await window.truckMintcontract.methods
       .totalSupply()
-      .call(); 
+      .call();
     return totalSupply;
   } catch (err) {
     console.log(err);
@@ -105,17 +150,17 @@ export const mintNFT = async (minterEmail) => {
 
       //set up your Ethereum transaction
 
-      //sign the transaction via Metamask 
+      //sign the transaction via Metamask
       const txHash = await web3.eth.sendTransaction({
         to: truckMintAddress, // Required except during contract publications.
         from: address_connected, // must match user's active address.
         data: window.truckMintcontract.methods.MintNFT().encodeABI(), //make call to buy box
       });
-      await addDoc(collection(firestoredb, "Minters"), {
+      await addDoc(collection(firestoredb, "TruckMintEmails"), {
         minterEmail: minterEmail,
+        mintTime: new Date(),
       })
         .then(async (docRef) => {
-       
           window.location.reload();
         })
         .catch((error) => {
@@ -134,13 +179,13 @@ export const mintNFT = async (minterEmail) => {
     //  Create WalletConnect Provider
     const provider = new WalletConnectProvider({
       rpc: {
-        80001:
-          "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb",
+        137: RPC_URL,
       },
+      qrcode: false,
     });
 
     //  Enable session (triggers QR Code modal)
-    provider.enable();
+    await provider.enable();
 
     const web3 = new Web3(provider);
     // var weiValue = web3.utils.toWei("0.01", "ether");
@@ -156,20 +201,17 @@ export const mintNFT = async (minterEmail) => {
         truckMintAddress
       );
 
-   
-
       //sign the transaction via Metamask
       const txHash = await web3.eth.sendTransaction({
         to: truckMintAddress, // Required except during contract publications.
         from: address_connected, // must match user's active address.
-
         data: window.truckMintcontract.methods.MintNFT().encodeABI(), //make call to buy box
       });
-      await addDoc(collection(firestoredb, "Minters"), {
+      await addDoc(collection(firestoredb, "TruckMintEmails"), {
         minterEmail: minterEmail,
+        mintTime: new Date(),
       })
         .then(async (docRef) => {
-       
           window.location.reload();
         })
         .catch((error) => {
@@ -187,7 +229,7 @@ export const mintNFT = async (minterEmail) => {
   }
 };
 
-export const checkAllowance = async () => { 
+export const checkAllowance = async () => {
   if (window.ethereum) {
     var address_connected = "";
 
@@ -207,7 +249,8 @@ export const checkAllowance = async () => {
 
       const totalAllowance = await window.truckTokenContract.methods
         .allowance(address_connected, truckMintAddress)
-        .call(); 
+        .call();
+
       return totalAllowance;
     } catch (err) {
       console.log(err);
@@ -217,9 +260,9 @@ export const checkAllowance = async () => {
     //  Create WalletConnect Provider
     const provider = new WalletConnectProvider({
       rpc: {
-        80001:
-          "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb",
+        137: RPC_URL,
       },
+      qrcode: false,
     });
 
     //  Enable session (triggers QR Code modal)
@@ -241,7 +284,8 @@ export const checkAllowance = async () => {
 
       const totalAllowance = await window.truckTokenContract.methods
         .allowance(address_connected, truckMintAddress)
-        .call(); 
+        .call();
+
       return totalAllowance;
 
       //sign the transaction via Metamask
@@ -256,7 +300,7 @@ export const approveMinter = async () => {
     var address_connected = "";
 
     // var weiValue = web3.utils.toWei("0.34", "ether");
-    var valueWETH = "3400000000000000000";
+    var valueWETH = "340000000000000000";
 
     await web3.eth.getAccounts().then((res) => {
       address_connected = res[0];
@@ -285,9 +329,9 @@ export const approveMinter = async () => {
     //  Create WalletConnect Provider
     const provider = new WalletConnectProvider({
       rpc: {
-        80001:
-          "https://polygon-mumbai.g.alchemy.com/v2/4PVWbySpmDFT8D4d3T8PcFlCDPRUqehb",
+        137: RPC_URL,
       },
+      qrcode: false,
     });
 
     //  Enable session (triggers QR Code modal)
@@ -296,7 +340,7 @@ export const approveMinter = async () => {
     const web3 = new Web3(provider);
 
     var address_connected = "";
-    var valueWETH = "3400000000000000000";
+    var valueWETH = "340000000000000000";
 
     await web3.eth.getAccounts().then((res) => {
       address_connected = res[0];

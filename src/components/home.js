@@ -37,8 +37,15 @@ import {
 import { toast } from "react-toastify";
 import validator from "validator";
 import Spinner from "react-bootstrap/Spinner";
+import { useAccount, useNetwork } from "wagmi";
+
+// const current_chainId = 80001;
+const current_chainId = 137;
 
 const Home = (props) => {
+  const { address } = useAccount();
+  const { chain } = useNetwork();
+
   const [address_connected, setAddressConnected] = useState("");
   const getCurrrentConnectAddress = async () => {
     const currentConnectedAddress = await getConnectedAddress();
@@ -60,7 +67,7 @@ const Home = (props) => {
 
   //check user's allowance
   const checkAllowanceofUser = async () => {
-    // setisLoading(true);
+    setisLoading(true);
     const totalAllowanceTemp = await checkAllowance();
     setTotalAllowance(totalAllowanceTemp);
     setisLoading(false);
@@ -68,7 +75,7 @@ const Home = (props) => {
 
   //get total minted supply
   const getTotalMintedSupply = async () => {
-    // setisLoading(true);
+    setisLoading(true);
     const totalMintedSupplyTemp = await getTotalSupply();
     setTotalMintedSupply(totalMintedSupplyTemp);
     setisLoading(false);
@@ -76,19 +83,26 @@ const Home = (props) => {
 
   useEffect(() => {
     checkAllowanceofUser();
-  }, [address_connected]);
+  }, [address]);
 
   useEffect(() => {
     getTotalMintedSupply();
   }, []);
+
   useEffect(() => {
     if (totalAllowance != null) {
-      if (totalAllowance == 3400000000000000000) {
-        setShowApprove(false);
-        setShowMint(true);
+      if (address == "" || address == null || address == undefined) {
+        toast.error("Please connect your wallet first", {
+          toastId: "walletConnectError",
+        });
       } else {
-        setShowApprove(true);
-        setShowMint(false);
+        if (totalAllowance == 340000000000000000) {
+          setShowApprove(false);
+          setShowMint(true);
+        } else {
+          setShowApprove(true);
+          setShowMint(false);
+        }
       }
     }
   }, [totalAllowance]);
@@ -112,29 +126,75 @@ const Home = (props) => {
     return errorOccurs;
   }
   const onApprovePressed = async () => {
-    if (isLoading) {
-      toast.warning("Please wait!", { toastId: "pleaseWaitWarning" });
+    if (chain) {
+      if (chain.id == current_chainId) {
+        if (isLoading) {
+          toast.warning("Please wait!", { toastId: "pleaseWaitWarning" });
+        } else {
+          if (address == "" || address == null || address == undefined) {
+            toast.error("Please connect your wallet first", {
+              toastId: "walletConnectError",
+            });
+          } else {
+            setisLoading(true);
+            const approvedResult = await approveMinter();
+            checkAllowanceofUser();
+            setTimeout(() => {
+              setisLoading(false);
+            }, 10000);
+          }
+        }
+      } else {
+        toast.warning(
+          "Please connect to Polygon Mainnet. Use Connect Wallet button on top",
+          {
+            toastId: "wrongChainId",
+          }
+        );
+      }
     } else {
-      // setisLoading(true);
-      const approvedResult = await approveMinter();
-      checkAllowanceofUser();
+      toast.warning(
+        "Please connect to Polygon Mainnet. Use Connect Wallet button on top",
+        {
+          toastId: "wrongChainId",
+        }
+      );
     }
   };
 
   const onMintPressed = async () => {
-    if (isLoading) {
-      toast.warning("Please wait!", { toastId: "pleaseWaitWarning" });
-    } else {
-      // setisLoading(true);
-      if (checkValidation()) {
-        //show error
-        setisLoading(false);
-        toast.error("Please enter valid email", { toastId: "emailError" });
+    if (chain) {
+      if (chain.id == current_chainId) {
+        if (isLoading) {
+          toast.warning("Please wait!", { toastId: "pleaseWaitWarning" });
+        } else {
+          setisLoading(true);
+          if (checkValidation()) {
+            //show error
+            console.log("Error!");
+            setisLoading(false);
+            toast.error("Please enter valid email", { toastId: "emailError" });
+          } else {
+            //Mint here
+            await mintNFT(minterEmail);
+            setisLoading(false);
+          }
+        }
       } else {
-        //Mint here
-        await mintNFT(minterEmail);
-        setisLoading(false);
+        toast.warning(
+          "Please connect to Polygon Mainnet. Use Connect Wallet button on top",
+          {
+            toastId: "wrongChainId",
+          }
+        );
       }
+    } else {
+      toast.warning(
+        "Please connect to Polygon Mainnet. Use Connect Wallet button on top",
+        {
+          toastId: "wrongChainId",
+        }
+      );
     }
   };
   const ChangingImages1 = () => {
@@ -231,11 +291,10 @@ const Home = (props) => {
               <div className="col-sm-6 col-6">
                 <div className="text-wrapper">
                   <h2 className="first-tit">
-                    Going Digital
                     <br />
                     Introducing the Future<br></br> of Trucking Via Web3
                   </h2>
-                  <h3 className="second-tit">Introducing Web3 Trucking</h3>
+                  {/* <h3 className="second-tit">Introducing Web3 Trucking</h3> */}
                   <p className="text hideonmob" style={{ fontWeight: "bold" }}>
                     <br />
                     Introducing Blockchain Trucking
@@ -291,8 +350,8 @@ const Home = (props) => {
                     </div>
                     <p className="text">
                       Our entire fleet of freight vehicles has been commissioned
-                      by tesla trucks. We exhibit a wide array of models ranging
-                      from fuel-run to fully electric trucks. Our tesla trucks
+                      by Autonomous EV trucks. We exhibit a wide array of models ranging
+                      from fuel-run to fully electric trucks. Our Autonomous EV trucks
                       are perfectly suitable for the long miles covered for
                       cargo transportation. Their damage-resistant exteriors can
                       withstand the long-term weathering that occurs from
@@ -411,10 +470,14 @@ const Home = (props) => {
               <div className="loader">
                 <Spinner
                   animation="border"
-                  style={{ width: "50px", height: "50px" }}
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    borderRightColor: "#f647e5",
+                  }}
                   isGrow
                 />
-                <span style={{ fontSize: "30px" }}>Loading...</span>
+                <span className="customLoadingText">Loading...</span>
               </div>
             </>
           )}
@@ -428,15 +491,19 @@ const Home = (props) => {
                         1st Sale
                       </h3>
                       <div className="timer first-timer">
-                        <Countdown
+                        <span>
+                          Mint Now
+                        </span>
+
+                        {/* <Countdown
                           onComplete={() => window.location.reload(false)}
                           date={new Date(parseInt(1665316799) * 1000)}
-                        />
+                        /> */}
                         {/* <span style={{ width: "250px" }}>
                           {timeLeft.days}:{timeLeft.hours}:{timeLeft.minutes}:
                           {timeLeft.seconds}
                         </span> */}
-                        <div className="titles-wrapper">
+                        {/* <div className="titles-wrapper">
                           <div className="time-tits">
                             <h3 className="day-tit">Day</h3>
                           </div>
@@ -449,19 +516,20 @@ const Home = (props) => {
                           <div className="time-tits">
                             <h3 className="day-tit">Sec</h3>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
-                      {/* <div className="time-tits mint-counter">
+                      <br/>
+                      <div className="time-tits mint-counter">
                         <h3 className="day-tit">
                           {padLeadingZeros(totalMintedSupply, 4)}/1000
                         </h3>
-                      </div> */}
+                      </div>
                       <div className="price-wrap">price: 0.34 WETH</div>
                       <div className="currentdate">
-                        Date: 10/9/2022, 11:59:00 PM
+                        Mint Date: 10/9/2022
                         {/* Date: {new Date().toLocaleString() + ""} */}
                       </div>
-                      {/* {showMint && !showApprove ? (
+                      {showMint && !showApprove ? (
                         <div className="textbox-email">
                           <input
                             type="email"
@@ -474,10 +542,10 @@ const Home = (props) => {
                         </div>
                       ) : (
                         <></>
-                      )} */}
+                      )}
                     </div>
                   </div>
-                  {/* {showMint && !showApprove ? (
+                  {showMint && !showApprove ? (
                     <div className="mint-btn-wrap">
                       <button
                         className="mint-btn"
@@ -489,8 +557,8 @@ const Home = (props) => {
                     </div>
                   ) : (
                     <></>
-                  )} */}
-                  {/* {showApprove && !showMint ? (
+                  )}
+                  {showApprove && !showMint ? (
                     <div className="mint-btn-wrap">
                       <button
                         className="mint-btn"
@@ -502,97 +570,93 @@ const Home = (props) => {
                     </div>
                   ) : (
                     <></>
-                  )} */}
+                  )}
                 </div>
               </div>
 
               <div className="col-xl-4">
-                <div className="card-wrapping">
-                  <div className="cards firstcard">
-                    <div className="card-inner">
-                      <h3 className="card-tit">2nd Sale</h3>
-                      <div className="timer first-timer">
-                        {/* <Countdown
+                <div className="cards">
+                  <div className="card-inner">
+                    <h3 className="card-tit">2nd Sale</h3>
+                    <div className="timer first-timer">
+                      {/* <Countdown
                         onComplete={() => window.location.reload(false)}
                         date={new Date(parseInt(1659749980) * 1000)}
                       /> */}
-                        <span className="comingSoonCustom">Coming Soon</span>
+                      <span className="comingSoonCustom">Coming Soon</span>
 
-                        <div className="titles-wrapper">
-                          <div className="time-tits">
-                            <h3 className="day-tit">Day</h3>
-                          </div>
-                          <div className="time-tits">
-                            <h3 className="day-tit">Hrs</h3>
-                          </div>
-                          <div className="time-tits">
-                            <h3 className="day-tit">Mins</h3>
-                          </div>
-                          <div className="time-tits">
-                            <h3 className="day-tit">Sec</h3>
-                          </div>
+                      <div className="titles-wrapper">
+                        <div className="time-tits">
+                          <h3 className="day-tit">Day</h3>
+                        </div>
+                        <div className="time-tits">
+                          <h3 className="day-tit">Hrs</h3>
+                        </div>
+                        <div className="time-tits">
+                          <h3 className="day-tit">Mins</h3>
+                        </div>
+                        <div className="time-tits">
+                          <h3 className="day-tit">Sec</h3>
                         </div>
                       </div>
-                      {/* <div className="time-tits mint-counter">
-                      <h3 className="day-tit">NA/NA</h3>
-                    </div> */}
-                      <div className="price-wrap">price: N/A</div>
-                      <div className="currentdate">
-                        Date: N/A
-                        {/* Date: {new Date().toLocaleString() + ""} */}
-                      </div>
-                      {/* <div
-                        style={{ visibility: "hidden" }}
-                        className="textbox-email"
-                      >
-                        <input type="email" placeholder="Email:" />
-                      </div> */}
                     </div>
+                    <div className="time-tits mint-counter">
+                      <h3 className="day-tit">NA/NA</h3>
+                    </div>
+                    <div className="price-wrap">price: N/A</div>
+                    <div className="currentdate">
+                      Date: N/A
+                      {/* Date: {new Date().toLocaleString() + ""} */}
+                    </div>
+                    {/* <div
+                      style={{ visibility: "hidden" }}
+                      className="textbox-email"
+                    >
+                      <input type="email" placeholder="Email:" />
+                    </div> */}
                   </div>
                 </div>
               </div>
               <div className="col-xl-4">
-                <div className="card-wrapping">
-                  <div className="cards firstcard">
-                    <div className="card-inner">
-                      <h3 className="card-tit">3rd Sale</h3>
-                      <div className="timer first-timer">
-                        {/* <Countdown
+                <div className="cards">
+                  <div className="card-inner">
+                    <h3 className="card-tit">3rd Sale</h3>
+                    <div className="timer first-timer">
+                      {/* <Countdown
                         onComplete={() => window.location.reload(false)}
                         date={new Date(parseInt(1659749380) * 1000)}
                       /> */}
-                        <span className="comingSoonCustom">Coming Soon</span>
+                      <span className="comingSoonCustom">Coming Soon</span>
 
-                        <div className="titles-wrapper">
-                          <div className="time-tits">
-                            <h3 className="day-tit">Day</h3>
-                          </div>
-                          <div className="time-tits">
-                            <h3 className="day-tit">Hrs</h3>
-                          </div>
-                          <div className="time-tits">
-                            <h3 className="day-tit">Mins</h3>
-                          </div>
-                          <div className="time-tits">
-                            <h3 className="day-tit">Sec</h3>
-                          </div>
+                      <div className="titles-wrapper">
+                        <div className="time-tits">
+                          <h3 className="day-tit">Day</h3>
+                        </div>
+                        <div className="time-tits">
+                          <h3 className="day-tit">Hrs</h3>
+                        </div>
+                        <div className="time-tits">
+                          <h3 className="day-tit">Mins</h3>
+                        </div>
+                        <div className="time-tits">
+                          <h3 className="day-tit">Sec</h3>
                         </div>
                       </div>
-                      {/* <div className="time-tits mint-counter">
-                      <h3 className="day-tit">NA/NA</h3>
-                    </div> */}
-                      <div className="price-wrap">price: N/A</div>
-                      <div className="currentdate">
-                        Date: N/A
-                        {/* Date: {new Date().toLocaleString() + ""} */}
-                      </div>
-                      {/* <div
-                        style={{ visibility: "hidden" }}
-                        className="textbox-email"
-                      >
-                        <input type="email" placeholder="Email:" />
-                      </div> */}
                     </div>
+                    <div className="time-tits mint-counter">
+                      <h3 className="day-tit">NA/NA</h3>
+                    </div>
+                    <div className="price-wrap">price: N/A</div>
+                    <div className="currentdate">
+                      Date: N/A
+                      {/* Date: {new Date().toLocaleString() + ""} */}
+                    </div>
+                    {/* <div
+                      style={{ visibility: "hidden" }}
+                      className="textbox-email"
+                    >
+                      <input type="email" placeholder="Email:" />
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -723,7 +787,7 @@ const Home = (props) => {
                   <h2 className="privatesale"> NFT Marketplace</h2>
                   <p className="text benifits">
                     Truck Mint provides its audience exclusive ownership of
-                    tesla truck NFTs.
+                    Autonomous EV truck NFTs.
                     <br />
                     <br />
                     With rare attributes and traits; the market value of our
