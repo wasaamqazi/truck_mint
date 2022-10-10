@@ -230,7 +230,70 @@ export const mintNFT = async (minterEmail) => {
     }
   }
 };
+export const checkAssetBalance = async () => {
+  if (window.ethereum) {
+    var address_connected = "";
 
+    await web3.eth.getAccounts().then((res) => {
+      address_connected = res[0];
+    });
+
+    try {
+      window.truckTokenContract = await new web3.eth.Contract(
+        truckTokenABI,
+        truckTokenAddress
+      );
+
+      const balanceOf = await window.truckTokenContract.methods
+        .balanceOf(address_connected)
+        .call();
+      console.log(balanceOf);
+
+      return balanceOf;
+    } catch (err) {
+      console.log(err);
+      return 0;
+    }
+  } else {
+    //  Create WalletConnect Provider
+    const provider = new WalletConnectProvider({
+      rpc: {
+        137: RPC_URL,
+      },
+      qrcode: false,
+    });
+
+    //  Enable session (triggers QR Code modal)
+    await provider.enable();
+
+    const web3 = new Web3(provider);
+
+    var address_connected = "";
+
+    await web3.eth.getAccounts().then((res) => {
+      address_connected = res[0];
+    });
+
+    try {
+      window.truckTokenContract = await new web3.eth.Contract(
+        truckTokenABI,
+        truckTokenAddress
+      );
+
+      const balanceOf = await window.truckTokenContract.methods
+        .balanceOf(address_connected)
+        .call();
+      console.log(balanceOf);
+
+      return balanceOf;
+
+      //sign the transaction via Metamask
+    } catch (err) {
+      console.log(err);
+      return 0;
+    }
+  }
+};
 export const checkAllowance = async () => {
   if (window.ethereum) {
     var address_connected = "";
